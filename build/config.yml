@@ -1,0 +1,16 @@
+project:
+	key: fidibo-test
+modules:
+	docker:
+		commands:
+			composer:
+				bin: composer
+				service: php
+				workdir: /app/web
+			phpunit:
+				bin: ["php", "./vendor/bin/phpunit"]
+				service: php
+				workdir: /app/web
+			artisan:
+  				bin: ["php", "./artisan"]
+  				service: php
