@@ -44,28 +44,21 @@ RUN pecl install -o -f redis \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
-RUN mkdir -p /home/narges/.composer && \
-    chown -R 1000:1000 /home/narges 
 
-RUN mkdir -p /usr/local/etc/php/apache2 && \
-    cp -R /usr/local/etc/php/conf.d /usr/local/etc/php/apache2 && \
 # Copy existing application directory contents
 COPY . /var/www
 
-RUN mkdir -p $PHP_CONFIG_TEMPLATE
+# RUN mkdir -p $PHP_CONFIG_TEMPLATE
 
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-COPY php-fpm.conf php.ini php-cli.ini ${PHP_CONFIG_TEMPLATE}/
+# COPY --chown=www:www . /var/www
+# COPY php-fpm.conf php.ini php-cli.ini ${PHP_CONFIG_TEMPLATE}/
 
 # Change current user to www
 USER 1000
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm", "./cli.php" ]
+CMD ["php-fpm"]
 
